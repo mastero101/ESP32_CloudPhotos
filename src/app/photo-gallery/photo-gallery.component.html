@@ -1,13 +1,13 @@
-<h2 style="margin-left: 4em;">ESP32-CAM Photo Gallery</h2>
+<h2 style="margin-left: 3em;">ESP32-CAM Photo Gallery</h2>
 
-<button style="margin-left: 6em;" (click)="deleteSelectedImages()">Delete Selected</button>
+<button style="margin-left: 8em;" mat-raised-button color="warn" (click)="deleteSelectedImages()">Delete Selected</button>
 
 <div class="flex-container">
-  <div *ngFor="let imageName of images">
+  <mat-card *ngFor="let imageName of images" class="image-card">
     <div [class.selected]="selectedImages.has(imageName)">
-      <input type="checkbox" (click)="toggleSelection(imageName)">
-      <p>{{ imageName }}</p>
+      <mat-checkbox (click)="toggleSelection(imageName)"></mat-checkbox>
+      <p class="image-timestamp">{{ formattedTimestamp(imageName) }}</p>
       <img [src]="getImageUrl(imageName)" alt="" title="">
     </div>
-  </div>
+  </mat-card>
 </div>

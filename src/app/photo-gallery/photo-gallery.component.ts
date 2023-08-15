@@ -13,7 +13,7 @@ interface Image {
 export class PhotoGalleryComponent implements OnInit {
   images: string[] = [];
   selectedImages: Set<string> = new Set();
-  baseUrl = 'http://132.145.206.61:5001';
+  baseUrl = 'http://132.145.206.61:5002/';
 
   constructor(private photoGalleryService: PhotoGalleryService) {}
 
@@ -61,7 +61,18 @@ export class PhotoGalleryComponent implements OnInit {
       });
   }
 
-  formattedTimestamp(imageName: string) {
-    // Implement logic to format timestamp from image name
+  formattedTimestamp(imageName: string): string {
+    const timestampPart = imageName.split("_")[0];
+    const formattedTimestamp = timestampPart
+      .replace("Z", "")
+      .replace("-", "/")
+      .replace("-", "/")
+      .replace("-", ":")
+      .replace("-", ":")
+      .replace("T", " - ")
+      .slice(0, -4);
+  
+    return formattedTimestamp;
   }
+  
 }

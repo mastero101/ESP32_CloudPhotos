@@ -18,3 +18,17 @@ img {
 .selected {
     border: 0.1px solid blue;
 }
+
+mat-card {
+    text-align: center;
+    width: 32%; 
+    margin-left: 0.5em;
+    margin-top: 1em; 
+    box-shadow: 2px 2px 4px;
+    @media screen and (max-width: 768px) {
+        width: 95%; 
+        margin-left: 0.5em;
+        margin-top: 1em; 
+        box-shadow: 2px 2px 4px;
+    }
+}

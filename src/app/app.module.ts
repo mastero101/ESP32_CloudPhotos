@@ -12,6 +12,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
@@ -33,7 +35,9 @@ import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
     MatRadioModule,
     MatListModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
