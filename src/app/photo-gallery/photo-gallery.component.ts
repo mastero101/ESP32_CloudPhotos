@@ -48,7 +48,7 @@ export class PhotoGalleryComponent implements OnInit {
     const selectedImagesArray = Array.from(this.selectedImages);
     this.photoGalleryService.deleteSelectedImages(selectedImagesArray)
       .subscribe(response => {
-        if (response.includes("File deleted successfully")) {
+        if (response.includes("Images deleted successfully")) {
           this.selectedImages.clear();
           this.loadImages();
         } else {

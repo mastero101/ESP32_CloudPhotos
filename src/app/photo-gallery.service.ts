@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PhotoGalleryService {
-  private baseUrl = 'http://132.145.206.61:5001';
+  private baseUrl = 'http://127.0.0.1:5001';
 
   constructor(private http: HttpClient) {}
 
@@ -15,6 +15,6 @@ export class PhotoGalleryService {
   }
 
   deleteSelectedImages(images: string[]): Observable<string> {
-    return this.http.post<string>(`${this.baseUrl}/delete`, images);
+    return this.http.post<string>(`${this.baseUrl}/delete`, JSON.stringify(images));
   }
 }
