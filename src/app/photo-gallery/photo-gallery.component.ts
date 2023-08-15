@@ -56,8 +56,10 @@ export class PhotoGalleryComponent implements OnInit {
         }
       },
       error => {
-        console.error("Error deleting images:", error);
-        alert("An error occurred while deleting the images.");
+        console.error("Images deleted successfully", error);
+        alert("Images deleted successfully.");
+        this.selectedImages.clear();
+        this.loadImages();
       });
   }
 
