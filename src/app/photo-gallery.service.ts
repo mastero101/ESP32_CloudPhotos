@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,15 +8,13 @@ import { Observable } from 'rxjs';
 export class PhotoGalleryService {
   private baseUrl = 'http://132.145.206.61:5001';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  async getImages(): Promise<string[]> { // Use async/await with Axios
-    const response = await axios.get<string[]>(`${this.baseUrl}/images`);
-    return response.data;
+  getImages(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/images`);
   }
 
-  async deleteImages(images: string[]): Promise<string> { // Use async/await with Axios
-    const response = await axios.post<string>(`${this.baseUrl}/delete`, images);
-    return response.data;
+  deleteSelectedImages(images: string[]): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}/delete`, images);
   }
 }

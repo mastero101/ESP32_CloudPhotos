@@ -3,11 +3,11 @@
 <button style="margin-left: 6em;" (click)="deleteSelectedImages()">Delete Selected</button>
 
 <div class="flex-container">
-    <div *ngFor="let imageName of images">
-        <div [class.selected]="selectedImages.has(imageName)">
-            <input type="checkbox" (click)="toggleSelection(imageName)">
-                <p>{{ imageName }}</p>
-            <img [src]="'/uploads/' + imageName" alt="" title="">
-        </div>
+  <div *ngFor="let imageName of images">
+    <div [class.selected]="selectedImages.has(imageName)">
+      <input type="checkbox" (click)="toggleSelection(imageName)">
+      <p>{{ imageName }}</p>
+      <img [src]="getImageUrl(imageName)" alt="" title="">
     </div>
+  </div>
 </div>

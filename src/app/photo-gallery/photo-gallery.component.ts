@@ -1,7 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { PhotoGalleryService } from './../photo-gallery.service';
 
-
 interface Image {
   name: string;
 }
@@ -14,11 +13,12 @@ interface Image {
 export class PhotoGalleryComponent implements OnInit {
   images: string[] = [];
   selectedImages: Set<string> = new Set();
+  baseUrl = 'http://132.145.206.61:5001';
 
   constructor(private photoGalleryService: PhotoGalleryService) {}
 
   ngOnInit(): void {
-    this.fetchImages();
+    this.loadImages();
   }
   
   toggleSelection(imageName: string) {
@@ -29,41 +29,36 @@ export class PhotoGalleryComponent implements OnInit {
     }
   }
 
-  fetchImages(): void {
+  loadImages(): void {
     this.photoGalleryService.getImages()
-    .then(images => {
-      this.images = images;
-    })
-    .catch(error => {
-      console.error('Error fetching images:', error);
-    });
+      .subscribe(images => {
+        this.images = images;
+      },
+      error => {
+        console.error("Error fetching images:", error);
+        alert("An error occurred while fetching images.");
+      });
   }
 
-  async deleteSelectedImages(): Promise<void> {
-    if (this.selectedImages.size === 0) {
-      alert('Please select at least one image to delete.');
-      return;
-    }
-  
-    const shouldDelete = confirm('Are you sure you want to delete the selected images?');
-    if (!shouldDelete) {
-      return;
-    }
-  
-    const imagesToDelete = Array.from(this.selectedImages);
-  
-    try {
-      const response = await this.photoGalleryService.deleteImages(imagesToDelete);
-      if (response.includes('File deleted successfully')) {
-        this.selectedImages.clear();
-        await this.fetchImages();
-      } else {
-        alert('An error occurred while deleting the images.');
-      }
-    } catch (error) {
-      console.error('Error deleting images:', error);
-      alert('An error occurred while deleting the images.');
-    }
+  getImageUrl(imageName: string): string {
+    return `${this.baseUrl}/uploads/${imageName}`;
+  }
+
+  deleteSelectedImages(): void {
+    const selectedImagesArray = Array.from(this.selectedImages);
+    this.photoGalleryService.deleteSelectedImages(selectedImagesArray)
+      .subscribe(response => {
+        if (response.includes("File deleted successfully")) {
+          this.selectedImages.clear();
+          this.loadImages();
+        } else {
+          alert("An error occurred while deleting the images.");
+        }
+      },
+      error => {
+        console.error("Error deleting images:", error);
+        alert("An error occurred while deleting the images.");
+      });
   }
 
   formattedTimestamp(imageName: string) {
