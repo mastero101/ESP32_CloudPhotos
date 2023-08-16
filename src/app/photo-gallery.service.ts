@@ -17,4 +17,8 @@ export class PhotoGalleryService {
   deleteSelectedImages(images: string[]): Observable<string> {
     return this.http.post<string>(`${this.baseUrl}/delete`, JSON.stringify(images));
   }
+
+  selectAllImages(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/images`);
+  }
 }

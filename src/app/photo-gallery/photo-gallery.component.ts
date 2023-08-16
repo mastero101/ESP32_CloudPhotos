@@ -22,7 +22,7 @@ export class PhotoGalleryComponent implements OnInit {
     this.loadImages();
   }
   
-  toggleSelection(imageName: string) {
+  toggleSelection(imageName: string): void {
     if (this.selectedImages.has(imageName)) {
       this.selectedImages.delete(imageName);
     } else {
@@ -46,25 +46,33 @@ export class PhotoGalleryComponent implements OnInit {
   }
 
   deleteSelectedImages(): void {
-    const selectedImagesArray = Array.from(this.selectedImages);
-    this.photoGalleryService.deleteSelectedImages(selectedImagesArray)
-      .subscribe(
-        (response: any) => {
-          if (response && response.message === "Images deleted successfully") {
-            this.selectedImages.clear();
-            this.loadImages();
-            alert("Images deleted successfully!");
-          } else {
-            console.error("An error occurred while deleting the images.", response);
+    if (confirm("Are you sure you want to delete the selected images?")) {
+      const selectedImagesArray = Array.from(this.selectedImages);
+      this.photoGalleryService.deleteSelectedImages(selectedImagesArray)
+        .subscribe(
+          (response: any) => {
+            if (response && response.message === "Images deleted successfully") {
+              this.selectedImages.clear();
+              this.loadImages();
+              alert("Images deleted successfully!");
+            } else {
+              console.error("An error occurred while deleting the images.", response);
+              alert("An error occurred while deleting the images.");
+            }
+          },
+          (error: HttpErrorResponse) => {
+            console.error("An error occurred while deleting the images.", error);
             alert("An error occurred while deleting the images.");
           }
-        },
-        (error: HttpErrorResponse) => {
-          console.error("An error occurred while deleting the images.", error);
-          alert("An error occurred while deleting the images.");
-        }
-      );
+        );
+    }
   }
+  
+  select12(): void {
+    const first12Images = this.images.slice(0, 12);
+    first12Images.forEach(image => this.toggleSelection(image));
+  }
+  
 
   formattedTimestamp(imageName: string): string {
     const timestampPart = imageName.split("_")[0];

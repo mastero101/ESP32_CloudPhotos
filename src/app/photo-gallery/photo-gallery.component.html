@@ -1,11 +1,12 @@
 <h2>ESP32-CAM Photo Gallery</h2>
 
 <button mat-raised-button color="warn" (click)="deleteSelectedImages()">Delete Selected</button>
+<button class="select12" mat-raised-button color="primary" (click)="select12()">Select 12</button>
 
 <div class="flex-container">
   <mat-card *ngFor="let imageName of images" class="image-card">
     <div [class.selected]="selectedImages.has(imageName)">
-      <mat-checkbox (click)="toggleSelection(imageName)"></mat-checkbox>
+      <mat-checkbox [checked]="selectedImages.has(imageName)" (click)="toggleSelection(imageName)"></mat-checkbox>
       <p class="image-timestamp">{{ formattedTimestamp(imageName) }}</p>
       <img [src]="getImageUrl(imageName)" alt="" title="">
     </div>
