@@ -8,10 +8,18 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
 <button class="select" mat-raised-button color="primary" (click)="selectImages()">Select</button>
 
+<mat-form-field class="date">
+  <mat-label>Choose a date</mat-label>
+  <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
 <div class="flex-container">
-  <mat-card *ngFor="let imageName of images" class="image-card">
+  <mat-card *ngFor="let imageName of filteredImages" class="image-card">
     <div [class.selected]="selectedImages.has(imageName)">
       <mat-checkbox [checked]="selectedImages.has(imageName)" (click)="toggleSelection(imageName)"></mat-checkbox>
       <p class="image-timestamp">{{ formattedTimestamp(imageName) }}</p>

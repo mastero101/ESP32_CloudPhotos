@@ -16,6 +16,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
@@ -42,6 +45,9 @@ import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
     MatCheckboxModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

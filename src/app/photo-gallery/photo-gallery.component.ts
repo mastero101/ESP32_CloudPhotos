@@ -2,6 +2,8 @@ import { Component, OnInit  } from '@angular/core';
 import { PhotoGalleryService } from './../photo-gallery.service';
 import { HttpErrorResponse  } from '@angular/common/http';
 
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+
 interface Image {
   name: string;
 }
@@ -18,10 +20,14 @@ export class PhotoGalleryComponent implements OnInit {
   imageCountOptions: number[] = [12, 24, 36, 48, 96];
   baseUrl = 'http://132.145.206.61:5002/';
 
+  selectedDate: Date = new Date();
+  filteredImages: string[] = [];
+
   constructor(private photoGalleryService: PhotoGalleryService) {}
 
   ngOnInit(): void {
     this.loadImages();
+    this.onDateChange();
   }
   
   toggleSelection(imageName: string): void {
@@ -75,7 +81,6 @@ export class PhotoGalleryComponent implements OnInit {
     selectedImages.forEach(image => this.toggleSelection(image));
   }
   
-
   formattedTimestamp(imageName: string): string {
     const timestampPart = imageName.split("_")[0];
     const formattedTimestamp = timestampPart
@@ -88,6 +93,37 @@ export class PhotoGalleryComponent implements OnInit {
       .slice(0, -4);
   
     return formattedTimestamp;
+  }
+
+  formattedDateOnly(imageName: string): string {
+    const timestampPart = imageName.split("_")[0];
+    const formattedDate = timestampPart.replace(/\-/g, '/').slice(0, 10); // Formato YYYY/MM/DD
+    return formattedDate;
+  }
+
+  onDateChange(event?: MatDatepickerInputEvent<Date>): void {
+    if (event && event.value) {
+      this.selectedDate = event.value;
+    } else {
+      this.selectedDate = new Date(); // Establecer la fecha actual si no se selecciona ninguna
+    }
+  
+    const selectedDateStr = this.formattedDateOnly(this.selectedDate.toISOString());
+  
+    this.filteredImages = this.images.filter(image => {
+      const imageDate = this.formattedDateOnly(image); // Obtén la parte de la fecha de la imagen
+      return imageDate === selectedDateStr;
+    });
+  }
+  
+  isSameDate(date1: Date, date2: Date): boolean {
+    console.log('Comparing Dates:', date1, date2);
+    
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
   }
   
 }
