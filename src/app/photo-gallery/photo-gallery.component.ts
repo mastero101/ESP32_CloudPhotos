@@ -42,12 +42,14 @@ export class PhotoGalleryComponent implements OnInit {
     this.photoGalleryService.getImages()
       .subscribe(images => {
         this.images = images;
+        this.applyDateFilter(); // Aplica el filtro por fecha después de cargar las imágenes
       },
       error => {
         console.error("Error fetching images:", error);
         alert("An error occurred while fetching images.");
       });
   }
+  
 
   getImageUrl(imageName: string): string {
     return `${this.baseUrl}/uploads/${imageName}`;
@@ -77,9 +79,10 @@ export class PhotoGalleryComponent implements OnInit {
   }
   
   selectImages(): void {
-    const selectedImages = this.images.slice(0, this.selectedImageCount);
+    const selectedImages = this.filteredImages.slice(0, this.selectedImageCount);
     selectedImages.forEach(image => this.toggleSelection(image));
   }
+  
   
   formattedTimestamp(imageName: string): string {
     const timestampPart = imageName.split("_")[0];
@@ -114,6 +117,7 @@ export class PhotoGalleryComponent implements OnInit {
       const imageDate = this.formattedDateOnly(image); // Obtén la parte de la fecha de la imagen
       return imageDate === selectedDateStr;
     });
+    this.applyDateFilter();
   }
   
   isSameDate(date1: Date, date2: Date): boolean {
@@ -124,6 +128,15 @@ export class PhotoGalleryComponent implements OnInit {
       date1.getMonth() === date2.getMonth() &&
       date1.getDate() === date2.getDate()
     );
+  }
+
+  applyDateFilter(): void {
+    const selectedDateStr = this.formattedDateOnly(this.selectedDate.toISOString());
+  
+    this.filteredImages = this.images.filter(image => {
+      const imageDate = this.formattedDateOnly(image); // Obtén la parte de la fecha de la imagen
+      return imageDate === selectedDateStr;
+    });
   }
   
 }
