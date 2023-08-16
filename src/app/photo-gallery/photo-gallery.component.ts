@@ -15,7 +15,7 @@ export class PhotoGalleryComponent implements OnInit {
   images: string[] = [];
   selectedImages: Set<string> = new Set();
   selectedImageCount: number = 12;
-  imageCountOptions: number[] = [12, 24, 36];
+  imageCountOptions: number[] = [12, 24, 36, 48, 96];
   baseUrl = 'http://132.145.206.61:5002/';
 
   constructor(private photoGalleryService: PhotoGalleryService) {}
