@@ -1,7 +1,14 @@
 <h2>ESP32-CAM Photo Gallery</h2>
 
 <button mat-raised-button color="warn" (click)="deleteSelectedImages()">Delete Selected</button>
-<button class="select12" mat-raised-button color="primary" (click)="select12()">Select 12</button>
+  <mat-form-field>
+    <mat-select [(value)]="selectedImageCount">
+      <mat-option *ngFor="let option of imageCountOptions" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+<button class="select" mat-raised-button color="primary" (click)="selectImages()">Select</button>
 
 <div class="flex-container">
   <mat-card *ngFor="let imageName of images" class="image-card">

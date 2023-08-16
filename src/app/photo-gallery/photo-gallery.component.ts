@@ -14,6 +14,8 @@ interface Image {
 export class PhotoGalleryComponent implements OnInit {
   images: string[] = [];
   selectedImages: Set<string> = new Set();
+  selectedImageCount: number = 12;
+  imageCountOptions: number[] = [12, 24, 36];
   baseUrl = 'http://132.145.206.61:5002/';
 
   constructor(private photoGalleryService: PhotoGalleryService) {}
@@ -68,9 +70,9 @@ export class PhotoGalleryComponent implements OnInit {
     }
   }
   
-  select12(): void {
-    const first12Images = this.images.slice(0, 12);
-    first12Images.forEach(image => this.toggleSelection(image));
+  selectImages(): void {
+    const selectedImages = this.images.slice(0, this.selectedImageCount);
+    selectedImages.forEach(image => this.toggleSelection(image));
   }
   
 

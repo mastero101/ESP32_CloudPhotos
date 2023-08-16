@@ -17,7 +17,7 @@ h2 {
 }
 
 button {
-    margin-left: 44em;
+    margin-left: 35.5em;
     margin-top: 1em;
     margin-bottom: 1em;
     @media screen and (max-width: 768px) {
@@ -25,10 +25,19 @@ button {
     }
 }
 
-.select12 {
+mat-form-field {
     margin-left: 1em;
     @media screen and (max-width: 768px) {
-    margin-left: 9.2em;
+    width: 6em;
+    height: 5em;
+    margin-left: 5.3em;
+    }
+}
+
+.select {
+    margin-left: 1em;
+    @media screen and (max-width: 768px) {
+    margin-left: 1em;
     }
 }
   
