@@ -1,5 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { PhotoGalleryService } from './../photo-gallery.service';
+import { HttpErrorResponse  } from '@angular/common/http';
 
 interface Image {
   name: string;
@@ -47,20 +48,22 @@ export class PhotoGalleryComponent implements OnInit {
   deleteSelectedImages(): void {
     const selectedImagesArray = Array.from(this.selectedImages);
     this.photoGalleryService.deleteSelectedImages(selectedImagesArray)
-      .subscribe(response => {
-        if (response.includes("Images deleted successfully")) {
-          this.selectedImages.clear();
-          this.loadImages();
-        } else {
+      .subscribe(
+        (response: any) => {
+          if (response && response.message === "Images deleted successfully") {
+            this.selectedImages.clear();
+            this.loadImages();
+            alert("Images deleted successfully!");
+          } else {
+            console.error("An error occurred while deleting the images.", response);
+            alert("An error occurred while deleting the images.");
+          }
+        },
+        (error: HttpErrorResponse) => {
+          console.error("An error occurred while deleting the images.", error);
           alert("An error occurred while deleting the images.");
         }
-      },
-      error => {
-        console.error("Images deleted successfully", error);
-        alert("Images deleted successfully.");
-        this.selectedImages.clear();
-        this.loadImages();
-      });
+      );
   }
 
   formattedTimestamp(imageName: string): string {
