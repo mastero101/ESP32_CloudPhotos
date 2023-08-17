@@ -138,5 +138,9 @@ export class PhotoGalleryComponent implements OnInit {
       return imageDate === selectedDateStr;
     });
   }
+
+  reverseImageOrder(): void {
+    this.filteredImages.reverse();
+  }
   
 }

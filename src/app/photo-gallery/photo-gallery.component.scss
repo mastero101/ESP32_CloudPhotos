@@ -25,6 +25,15 @@ button {
     }
 }
 
+.reverse_button {
+    margin-left: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    @media screen and (max-width: 768px) {
+        margin-left: 1em;
+    }
+}
+
 mat-form-field {
     margin-left: 1em;
     @media screen and (max-width: 768px) {
@@ -36,7 +45,7 @@ mat-form-field {
 
 .date {
     width: 10.3em;
-    margin-left: 6.5em;
+    margin-left: 4.5em;
     margin-bottom: -1em;
 }
 
